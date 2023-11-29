@@ -343,18 +343,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1672187024}
     m_Modifications:
-    - target: {fileID: 2102548689850422477, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133206575110780393, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245911977895738346, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.78022
-      objectReference: {fileID: 0}
     - target: {fileID: 2245911977895738346, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.997
@@ -398,10 +386,6 @@ PrefabInstance:
     - target: {fileID: 4882110945164027037, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
       propertyPath: m_Name
       value: L_bot_button
-      objectReference: {fileID: 0}
-    - target: {fileID: 4882110945164027037, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -737,18 +721,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1672187024}
     m_Modifications:
-    - target: {fileID: 2102548689850422477, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133206575110780393, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245911977895738346, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.78022
-      objectReference: {fileID: 0}
     - target: {fileID: 2245911977895738346, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.008
@@ -792,10 +764,6 @@ PrefabInstance:
     - target: {fileID: 4882110945164027037, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
       propertyPath: m_Name
       value: top_right_button
-      objectReference: {fileID: 0}
-    - target: {fileID: 4882110945164027037, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4047,18 +4015,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1672187024}
     m_Modifications:
-    - target: {fileID: 2102548689850422477, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133206575110780393, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245911977895738346, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.78022
-      objectReference: {fileID: 0}
     - target: {fileID: 2245911977895738346, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.052
@@ -4102,10 +4058,6 @@ PrefabInstance:
     - target: {fileID: 4882110945164027037, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
       propertyPath: m_Name
       value: r_bot_button
-      objectReference: {fileID: 0}
-    - target: {fileID: 4882110945164027037, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4441,7 +4393,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1672187024}
-  - component: {fileID: 1672187025}
   m_Layer: 6
   m_Name: TabletopObjects
   m_TagString: Untagged
@@ -4468,22 +4419,6 @@ Transform:
   - {fileID: 1731169592}
   m_Father: {fileID: 2072316838}
   m_LocalEulerAnglesHint: {x: 60, y: -90, z: 0}
---- !u!114 &1672187025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1672187023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f8f9815c19c8854e9757235db674648, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveDuration: 1
-  isUp: 0
-  isDown: 0
-  isMoving: 0
 --- !u!1 &1684639857
 GameObject:
   m_ObjectHideFlags: 0
@@ -4966,18 +4901,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1672187024}
     m_Modifications:
-    - target: {fileID: 2102548689850422477, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133206575110780393, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245911977895738346, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.78022
-      objectReference: {fileID: 0}
     - target: {fileID: 2245911977895738346, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.041
@@ -5021,10 +4944,6 @@ PrefabInstance:
     - target: {fileID: 4882110945164027037, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
       propertyPath: m_Name
       value: top_left_button
-      objectReference: {fileID: 0}
-    - target: {fileID: 4882110945164027037, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
