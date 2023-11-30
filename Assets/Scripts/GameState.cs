@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class GameState : MonoBehaviour
 {
     public GameObject light1;
     public GameObject light2;
@@ -21,6 +21,9 @@ public class NewBehaviourScript : MonoBehaviour
         
     }
 
+    public void ButtonPressed(int buttonID){
+        print(buttonID);
+    }
     // Update is called once per frame
     void Update()
     {

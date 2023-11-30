@@ -12,11 +12,13 @@ enum animationState{
     appearingBody,
     appearingCase
 }
-public class Button_Functions : MonoBehaviour
+public class ButtonFunctions : MonoBehaviour
 {
     private animationState state = animationState.gone;
     private float animationTime=0;
     private Vector3 currentOffset = new Vector3(0,0,0);
+    public int buttonID;
+    public GameState gameState;
     public GameObject buttonCase;
     public GameObject buttonBody;
     public Vector3 caseUp  = new Vector3(0,0.1f,0);
@@ -44,8 +46,9 @@ public class Button_Functions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.E)){
+        if(Input.GetKeyDown(""+buttonID)){
             state = animationState.pressingDown;
+            gameState.ButtonPressed(buttonID);
             animationTime=0;
         }
         bool done;

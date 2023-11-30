@@ -383,6 +383,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3053157684070960715, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
+      propertyPath: buttonID
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3053157684070960715, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
+      propertyPath: gameState
+      value: 
+      objectReference: {fileID: 963194231}
     - target: {fileID: 4882110945164027037, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
       propertyPath: m_Name
       value: L_bot_button
@@ -761,6 +769,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3053157684070960715, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
+      propertyPath: buttonID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3053157684070960715, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
+      propertyPath: gameState
+      value: 
+      objectReference: {fileID: 963194231}
     - target: {fileID: 4882110945164027037, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
       propertyPath: m_Name
       value: top_right_button
@@ -4055,6 +4071,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3053157684070960715, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
+      propertyPath: buttonID
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3053157684070960715, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
+      propertyPath: gameState
+      value: 
+      objectReference: {fileID: 963194231}
     - target: {fileID: 4882110945164027037, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
       propertyPath: m_Name
       value: r_bot_button
@@ -4941,6 +4965,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3053157684070960715, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
+      propertyPath: buttonID
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3053157684070960715, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
+      propertyPath: gameState
+      value: 
+      objectReference: {fileID: 963194231}
     - target: {fileID: 4882110945164027037, guid: aaf50ae3599d54940a34b7aea87b94e9, type: 3}
       propertyPath: m_Name
       value: top_left_button
