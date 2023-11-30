@@ -12,7 +12,7 @@ enum animationState{
     appearingBody,
     appearingCase
 }
-public class ButtonFunctions : MonoBehaviour
+public class ButtonController : MonoBehaviour
 {
     private animationState state = animationState.gone;
     private float animationTime=0;
@@ -43,13 +43,27 @@ public class ButtonFunctions : MonoBehaviour
         target.transform.localPosition = Vector3.Lerp(start, end, ratio);
         return ratio>=0.99;
     }
+
+    void OnMouseOver(){
+        print("test");
+        if(Input.GetMouseButtonDown(0)){
+            click();
+        }
+    }
+
+    // click the button
+    public void click(){
+
+            state = animationState.pressingDown;
+            gameState.ButtonPressed(buttonID);
+            animationTime=0;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(""+buttonID)){
-            state = animationState.pressingDown;
-            gameState.ButtonPressed(buttonID);
-            animationTime=0;
+            click();
         }
         bool done;
         switch(state){

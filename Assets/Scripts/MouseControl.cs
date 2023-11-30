@@ -22,5 +22,12 @@ public class MouseControl : MonoBehaviour
         curr_rotation[0] = Mathf.Clamp(curr_rotation[0],-90,90);
         curr_rotation[1] = Mathf.Clamp(curr_rotation[1],-180,0);
         transform.eulerAngles = curr_rotation;
+        if(Input.GetMouseButtonDown(0)){
+            if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit)){
+                if(hit.collider.gameObject.CompareTag("Button")){
+                    hit.collider.gameObject.SendMessage("ClickedWithMouse");
+                }
+            }
+        }
     }
 }
