@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 enum animationState{
     up,
@@ -17,7 +18,8 @@ public class ButtonController : MonoBehaviour
     private animationState state = animationState.gone;
     private float animationTime=0;
     private Vector3 currentOffset = new Vector3(0,0,0);
-    public int buttonID;
+    public Command command;
+    public int key;
     public GameState gameState;
     public GameObject buttonCase;
     public GameObject buttonBody;
@@ -30,11 +32,14 @@ public class ButtonController : MonoBehaviour
     public float bodyDisappearingDuration = 1;
     public float caseAppearingDuration = 1;
     public float bodyAppearingDuration = 1;
+    public TMP_Text textBox;
+    public TMP_Text keyText;
 
     // Start is called before the first frame update
     void Start()
     {
         state = animationState.appearingCase;
+        keyText.text = key.ToString();
     }
 
     bool LerpComponent(GameObject target, Vector3 start, Vector3 end, float duration){
@@ -44,25 +49,18 @@ public class ButtonController : MonoBehaviour
         return ratio>=0.99;
     }
 
-    void OnMouseOver(){
-        print("test");
-        if(Input.GetMouseButtonDown(0)){
-            click();
-        }
-    }
-
     // click the button
     public void click(){
 
             state = animationState.pressingDown;
-            gameState.ButtonPressed(buttonID);
+            gameState.ButtonPressed(command);
             animationTime=0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(""+buttonID)){
+        if(Input.GetKeyDown(""+key)){
             click();
         }
         bool done;
