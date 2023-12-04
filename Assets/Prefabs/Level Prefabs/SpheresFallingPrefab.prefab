@@ -465,9 +465,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1241957179480137919}
-  - component: {fileID: 2180513434802570551}
+  - component: {fileID: 4480775678656273317}
   m_Layer: 6
-  m_Name: BallsFallingScene
+  m_Name: SpheresFallingPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -491,7 +491,7 @@ Transform:
   - {fileID: 8171556318237672584}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2180513434802570551
+--- !u!114 &4480775678656273317
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -500,12 +500,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7540939123285532897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92bca2cec60644046b3a6e83fc6b6051, type: 3}
+  m_Script: {fileID: 11500000, guid: 9311369fef639094cadc2239ad594208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numSpheres: 25
+  numSpheres: 100
   minSize: 0.1
   maxSize: 5
   scaleChangeAmount: 0
-  maxVelocity: 12
-  winningColor: 
+  maxVelocity: 18
