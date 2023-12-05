@@ -6,7 +6,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public int score;
-
+    public bool isAlive = false;
     public GameObject currQuestionPrefab;
     private GameObject toDest;
 
@@ -18,13 +18,16 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Space)) {
-            doIt();
+            if (!isAlive){
+                doIt();
+                isAlive = true;
+            }
+            else
+            {
+                Destroy(toDest);
+                isAlive = false;    
+            }
         }
-        if (Input.GetKeyUp(KeyCode.X))
-        {
-            Destroy(toDest);
-        }
-
     }
     void doIt()
     {

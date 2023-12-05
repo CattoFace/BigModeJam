@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9311369fef639094cadc2239ad594208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numSpheres: 100
+  numSpheres: 200
   minSize: 0.1
   maxSize: 5
   scaleChangeAmount: 0
