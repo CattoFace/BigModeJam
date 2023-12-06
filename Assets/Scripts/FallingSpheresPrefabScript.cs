@@ -9,6 +9,7 @@ public class SpheresF : MonoBehaviour
     public float minSize = 0.1f;
     public float maxSize = 5f;
     public float scaleChangeAmount;
+    public int relativeDifficulty;
     Rigidbody rb;
     Renderer sphereRenderer;
     public float maxVelocity = 18f;
@@ -20,6 +21,7 @@ public class SpheresF : MonoBehaviour
     void Start()
     {
         activateQ();
+        
     }
 
     // Update is called once per frame
@@ -29,10 +31,14 @@ public class SpheresF : MonoBehaviour
     }
     public void activateQ()
     {
-        winColorIndex = Random.Range(0, 7);
-        colors = new Color[] { Color.red, Color.blue, Color.green, Color.yellow, Color.black, Color.white, Color.cyan, new Color(0.5f, 0f, 0.5f) };
+        //note: when working with integers, Random.Range is (minInclusive,maxExclusive)
+        winColorIndex = Random.Range(0, 8);
+        //if relDif=0, easiest. relDif=2, hardest (bigger relDef means less spheres of winning colors in relation
+        //to avg amount of spheres of each color
+        relativeDifficulty = Random.Range(0, 3);
+        colors = new Color[] { Color.red, Color.green, Color.blue, Color.yellow, Color.black, Color.white, Color.cyan, new Color(0.5f, 0f, 0.5f) };
         winColor = colors[winColorIndex];
-        Debug.Log(winColorIndex);
+        Debug.Log(winColorIndex+" , Difficultiy: "+relativeDifficulty);
         counter = 0;
         SpawnSpheres();
     }
@@ -62,7 +68,7 @@ public class SpheresF : MonoBehaviour
             sphere.AddComponent<FallingBall>();
             sphere.layer = 7;
             counter++;
-            if (counter == 23)
+            if (counter == 22+relativeDifficulty)
             {
                 j++;
                 counter = 0;
