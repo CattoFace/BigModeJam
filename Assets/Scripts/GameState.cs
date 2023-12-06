@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
-enum State{
+public enum State{
     mainMenu,
     paused,
     fastMode,
@@ -29,7 +30,6 @@ public class GameState : MonoBehaviour
     public GameObject light2;
     public GameObject light3;
     public GameObject light4;
-    public GameObject LevelManagerObject;
     public LevelManager levelManager;
     private State state = State.mainMenu;
     public TMP_Text screenText;
@@ -37,6 +37,15 @@ public class GameState : MonoBehaviour
     public ButtonController button2;
     public ButtonController button3;
     public ButtonController button4;
+    public GameObject fastPanel;
+    public GameObject slowPanel;
+    public Slider timeLeftSlider;
+    public TMP_Text scoreText;
+    public TMP_Text timeSurvivedText;
+    public float difficulty=0;
+    public float difficultyIncreaseRate=1;
+    public float score=0;
+    public float timeAlive=0;
     void set_lights(bool toSet){
         light1.SetActive(toSet);
         light2.SetActive(toSet);
@@ -90,7 +99,6 @@ public class GameState : MonoBehaviour
 
     void Start(){
         openMainMenu();
-        LevelManagerObject = GameObject.Find("LevelManager");
     }
 
     public void openMainMenu(){
@@ -105,16 +113,25 @@ public class GameState : MonoBehaviour
         button3.textBox.text = "Instructions";
         button4.command = Command.quit;
         button4.textBox.text = "Quit";
+        slowPanel.SetActive(false);
+        fastPanel.SetActive(false);
     }
 
     void showInstructions(){
         //TODO
     }
     void startSlowGamemode(){
+        state = State.slowMode;
+        slowPanel.SetActive(true);
+        score=1;
+        difficulty=0.1f;
         //TODO
     }
     void startFastGamemode(){
-        //LevelManagerObject.GetComponent<LevelManager>().fastMode = true;
+        state = State.fastMode;
+        fastPanel.SetActive(true);
+        score=1;
+        difficulty=0.1f;
         //TODO
     }
     void resumeGame(){
@@ -124,15 +141,18 @@ public class GameState : MonoBehaviour
         //TODO
     }
     void handleAnswer(float result){
-        //TODO
+        score += result;
+        difficulty+=difficultyIncreaseRate;
+        levelManager.StartLevel(state, difficulty);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.X))
-    {
-       set_lights(! light1.activeSelf);
-    }
+        if(state==State.fastMode){
+            timeAlive+=Time.deltaTime;
+            timeSurvivedText.text = timeAlive.ToString("n2")+"s";
+            score-=difficulty*Time.deltaTime;;
+            timeLeftSlider.value = score;
+        }
     }
 }

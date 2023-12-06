@@ -26,7 +26,7 @@ public class LevelManager : MonoBehaviour
                 if(currQuestionPrefab == null) {
                     Debug.Log("NO");
                 }
-                spawnQuestion();
+                StartLevel(State.slowMode, 0);
                 floor.SetActive(false);
                 isAlive = true;
             }
@@ -39,7 +39,7 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-    void spawnQuestion()
+    public void StartLevel(State state, float difficulty)
     {
         toDest = Instantiate(currQuestionPrefab, new Vector3(-10f, 0, 0), Quaternion.identity);
         toDest.transform.SetParent(transform);
