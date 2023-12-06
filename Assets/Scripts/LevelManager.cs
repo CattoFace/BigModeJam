@@ -9,10 +9,13 @@ public class LevelManager : MonoBehaviour
     public bool isAlive = false;
     public GameObject currQuestionPrefab;
     private GameObject toDest;
-    public string[] questionPrefabNames; 
+    public bool fastMode;
+    public string[] questionPrefabNames;
+    private GameObject floor;
     void Start()
     {
         questionPrefabNames = new string[] { "SpheresFallingPrefab" };
+        floor = GameObject.Find("stageFloor");
     }
     //update is that function that updates every frame
     void Update()
@@ -23,20 +26,24 @@ public class LevelManager : MonoBehaviour
                 if(currQuestionPrefab == null) {
                     Debug.Log("NO");
                 }
-                doIt();
+                spawnQuestion();
+                floor.SetActive(false);
                 isAlive = true;
             }
             else
             {
                 currQuestionPrefab = null;
+                floor.SetActive(true);
                 Destroy(toDest);
                 isAlive = false;    
             }
         }
     }
-    void doIt()
+    void spawnQuestion()
     {
         toDest = Instantiate(currQuestionPrefab, new Vector3(-10f, 0, 0), Quaternion.identity);
+        toDest.transform.SetParent(transform);
+
     }
     public float submitAnswer(int answer)
     {

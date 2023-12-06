@@ -35,7 +35,7 @@ public class SpheresF : MonoBehaviour
         winColorIndex = Random.Range(0, 8);
         //if relDif=0, easiest. relDif=2, hardest (bigger relDef means less spheres of winning colors in relation
         //to avg amount of spheres of each color
-        relativeDifficulty = Random.Range(0, 3);
+        relativeDifficulty = Random.Range(0, 4);
         colors = new Color[] { Color.red, Color.green, Color.blue, Color.yellow, Color.black, Color.white, Color.cyan, new Color(0.5f, 0f, 0.5f) };
         winColor = colors[winColorIndex];
         Debug.Log(winColorIndex+" , Difficultiy: "+relativeDifficulty);
@@ -47,7 +47,7 @@ public class SpheresF : MonoBehaviour
         int j = 0;
         for (int i = 0; i < numSpheres; i++)
         {
-            Vector3 spawnLocation = new Vector3(Random.Range(-14f, -6f), 5f, Random.Range(-4, 4));
+            Vector3 spawnLocation = new Vector3(Random.Range(-13f, -7f), Random.Range(6f,12f), Random.Range(-4f, 4f));
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.transform.position = spawnLocation;
             sphere.transform.SetParent(transform);

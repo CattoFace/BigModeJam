@@ -16,7 +16,7 @@ public class FallingBall : MonoBehaviour
     {
         scaleChangeAmount = Random.Range(0.3f, 0.6f);
         rb = GetComponent<Rigidbody>();
-        rb.drag = Random.Range(0.3f, 0.75f);
+        rb.drag = Random.Range(0.45f, 0.9f);
     }
 
     // Update is called once per frame

@@ -29,6 +29,7 @@ public class GameState : MonoBehaviour
     public GameObject light2;
     public GameObject light3;
     public GameObject light4;
+    public GameObject LevelManagerObject;
     public LevelManager levelManager;
     private State state = State.mainMenu;
     public TMP_Text screenText;
@@ -89,6 +90,7 @@ public class GameState : MonoBehaviour
 
     void Start(){
         openMainMenu();
+        LevelManagerObject = GameObject.Find("LevelManager");
     }
 
     public void openMainMenu(){
@@ -112,6 +114,7 @@ public class GameState : MonoBehaviour
         //TODO
     }
     void startFastGamemode(){
+        //LevelManagerObject.GetComponent<LevelManager>().fastMode = true;
         //TODO
     }
     void resumeGame(){
