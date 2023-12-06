@@ -2079,7 +2079,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
-  currQuestionPrefab: {fileID: 7540939123285532897, guid: 0c23b17c1a573c241b2845798395f04c, type: 3}
+  isAlive: 0
+  currQuestionPrefab: {fileID: 0}
+  questionPrefabNames: []
 --- !u!4 &639174597
 Transform:
   m_ObjectHideFlags: 0
