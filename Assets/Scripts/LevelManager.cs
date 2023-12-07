@@ -1,10 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 
 public class LevelManager : MonoBehaviour
 {
+    public TMP_Text screenText;
+    public ButtonController button1;
+    public ButtonController button2;
+    public ButtonController button3;
+    public ButtonController button4;
+    public GameObject light1;
+    public GameObject light2;
+    public GameObject light3;
+    public GameObject light4;
+    public GameObject fastPanel;
+    public GameObject slowPanel;
     public int score;
     public bool isAlive = false;
     public GameObject currQuestionPrefab;
@@ -12,9 +24,10 @@ public class LevelManager : MonoBehaviour
     public bool fastMode;
     public string[] questionPrefabNames;
     private GameObject floor;
+
     void Start()
     {
-        questionPrefabNames = new string[] { "SpheresFallingPrefab" };
+        questionPrefabNames = new string[] { "SpheresFallingPrefab","ClothesFallingPrefab","SpheresLeftToRight" };
         floor = GameObject.Find("stageFloor");
     }
     //update is that function that updates every frame
@@ -26,7 +39,7 @@ public class LevelManager : MonoBehaviour
                 if(currQuestionPrefab == null) {
                     Debug.Log("NO");
                 }
-                StartLevel(State.slowMode, 0);
+                summonPrefab(State.slowMode, 0);
                 floor.SetActive(false);
                 isAlive = true;
             }
@@ -39,7 +52,7 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-    public void StartLevel(State state, float difficulty)
+    public void summonPrefab(State state, float difficulty)
     {
         toDest = Instantiate(currQuestionPrefab, new Vector3(-10f, 0, 0), Quaternion.identity);
         toDest.transform.SetParent(transform);
@@ -50,3 +63,4 @@ public class LevelManager : MonoBehaviour
         return 0;
     }
 }
+
