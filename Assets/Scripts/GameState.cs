@@ -143,7 +143,7 @@ public class GameState : MonoBehaviour
     void handleAnswer(float result){
         score += result;
         difficulty+=difficultyIncreaseRate;
-        levelManager.StartLevel(state, difficulty);
+        levelManager.summonPrefab(state, difficulty);
     }
 
     void Update()

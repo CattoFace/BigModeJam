@@ -3766,6 +3766,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f744f3f07f290c08abc8fc77962b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenText: {fileID: 0}
+  button1: {fileID: 0}
+  button2: {fileID: 0}
+  button3: {fileID: 0}
+  button4: {fileID: 0}
+  light1: {fileID: 0}
+  light2: {fileID: 0}
+  light3: {fileID: 0}
+  light4: {fileID: 0}
+  fastPanel: {fileID: 0}
+  slowPanel: {fileID: 0}
   score: 0
   isAlive: 0
   currQuestionPrefab: {fileID: 0}
