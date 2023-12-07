@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectsFallingScript : MonoBehaviour
 {
-    public int numObjects = 194;
+    public int numObjects = 100;
     public float minSize = 0.1f;
     public float maxSize = 5f;
     public float scaleChangeAmount;
@@ -61,25 +61,26 @@ public class ObjectsFallingScript : MonoBehaviour
         for (int i = 0; i < numObjects; i++)
         {
             Vector3 spawnLocation = new Vector3(Random.Range(-13f, -7f), Random.Range(6f, 12f), Random.Range(-4f, 4f));
-            tempObj= Instantiate(Objects[j], spawnLocation, Quaternion.identity);
+            tempObj = Instantiate(Objects[j], spawnLocation, Quaternion.identity);
+            Debug.Log("j = " + j);
             tempObj.transform.SetParent(transform);
             tempObj.AddComponent<Rigidbody>();
             rb = tempObj.GetComponent<Rigidbody>();
-            rb.drag = Random.Range(0.5f, 0.75f);
+            rb.drag = Random.Range(0.5f, 0.7f);
             objectRenderer = tempObj.GetComponent<Renderer>();
             tempObj.transform.localScale *= Random.Range(1.2f, 1.4f);
             tempObj.AddComponent<FallingObject>();
             tempObj.layer = 7;
             objType = tempObj.name;
             tempObj.GetComponent<FallingObject>().setType(objType);
-            //if j is under 7 means we're still spawning 7 spheres of each color(0-7 indices)
+            //if j is under 16 means we're still spawning 12 objs of each type(0-15 indices)
             if (j > 15)
             {
                 j = winObjectIndex;
                 counter = 100; // so it doesnt intrupt
             }
-            counter++;
-            if (counter == 12)
+            ++counter;
+            if (counter == 6)
             {
                 j++;
                 counter = 0;

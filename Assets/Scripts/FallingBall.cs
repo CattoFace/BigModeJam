@@ -40,7 +40,7 @@ public class FallingBall : MonoBehaviour
             // Set the new scale of the sphere
             transform.localScale = new Vector3(newScaleX, newScaleY, newScaleZ);
             scaleChangeAmount = -scaleChangeAmount;
-          
+            rb.drag = Random.Range(0.5f, 0.8f);
             //update position to top of screen
             transform.position = newPos;
             
