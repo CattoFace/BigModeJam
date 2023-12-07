@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectsFallingScript : MonoBehaviour
 {
-    public int numObjects = 100;
+    public int numObjects;
     public float minSize = 0.1f;
     public float maxSize = 5f;
     public float scaleChangeAmount;
@@ -32,6 +32,7 @@ public class ObjectsFallingScript : MonoBehaviour
     public GameObject lamp;
     public GameObject dbRack;
     public GameObject washingM;
+    public Vector3 commonScale;
 
     
     // Start is called before the first frame update
@@ -49,20 +50,29 @@ public class ObjectsFallingScript : MonoBehaviour
         relativeDifficulty = 0;
         winObjectIndex = Random.Range(0, 16);
         winObject = Objects[winObjectIndex];
+        commonScale = new Vector3(1.3f, 1.3f, 1.3f);
         counter = 0;
+        numObjects = 155;
         SpawnObjects();
+        Debug.Log(winObject.name);
+
     }
 
     public void SpawnObjects()
     {
+        float difficulty = Random.Range(1f, 1.75f);
         GameObject tempObj;
         string objType;
         int j = 0;
         for (int i = 0; i < numObjects; i++)
         {
+            if (j > 15)
+            {
+                j = winObjectIndex;
+                counter = 100;
+            }
             Vector3 spawnLocation = new Vector3(Random.Range(-13f, -7f), Random.Range(6f, 12f), Random.Range(-4f, 4f));
             tempObj = Instantiate(Objects[j], spawnLocation, Quaternion.identity);
-            Debug.Log("j = " + j);
             tempObj.transform.SetParent(transform);
             tempObj.AddComponent<Rigidbody>();
             rb = tempObj.GetComponent<Rigidbody>();
@@ -72,26 +82,58 @@ public class ObjectsFallingScript : MonoBehaviour
             tempObj.AddComponent<FallingObject>();
             tempObj.layer = 7;
             objType = tempObj.name;
-            tempObj.GetComponent<FallingObject>().setType(objType);
-            //if j is under 16 means we're still spawning 12 objs of each type(0-15 indices)
-            if (j > 15)
+            //section unique for this question cuz of diff sizes of objs
+            switch (j)
             {
-                j = winObjectIndex;
-                counter = 100; // so it doesnt intrupt
+                case 2:
+                    tempObj.transform.localScale *= 1.5f;
+                    break;
+                case 3:
+                    tempObj.transform.localScale *= 1.65f;
+                    break;
+                case 5:
+                    tempObj.transform.localScale *= 1.5f;
+                    break;
+                case 8:
+                    tempObj.transform.localScale *= 3f;
+                    break;
+                case 11:
+                    tempObj.transform.localScale *= 1.5f;
+                    break;
+                case 12:
+                    tempObj.transform.localScale *= 1.5f;
+                    break;
+                case 13:
+                    tempObj.transform.localScale *= 3f;
+                    break;
+                case 14:
+                    tempObj.transform.localScale *= 1.3f;
+                    break;
+                case 15:
+                    tempObj.transform.localScale *= 0.8f;
+                    break;
+                default:
+                    tempObj.transform.localScale = commonScale;
+                    break;
             }
+            //apply difficulty
+            tempObj.transform.localScale *= difficulty;
+            tempObj.GetComponent<FallingObject>().setType(objType);
+            //end of section  
             ++counter;
-            if (counter == 6)
+            if (counter == 8)
             {
                 j++;
                 counter = 0;
             }
         }
+        Debug.Log(numObjects);
         return;
     }
-
+    
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

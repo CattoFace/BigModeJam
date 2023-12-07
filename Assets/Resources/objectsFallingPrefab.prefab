@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b872e864eb69e7142a7087f32d09bd28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numObjects: 194
+  numObjects: 0
   minSize: 0.1
   maxSize: 5
   scaleChangeAmount: 0
@@ -66,3 +66,4 @@ MonoBehaviour:
   lamp: {fileID: 8225997399151032839, guid: a47bc71942f460a47ab5fdebb4abd678, type: 3}
   dbRack: {fileID: 972261633070753599, guid: 25301affd8ec4504c9565ad48413f7f0, type: 3}
   washingM: {fileID: 6075769524634383316, guid: 2343b3a108edf9a49b06659f0928a030, type: 3}
+  commonScale: {x: 3, y: 3, z: 3}

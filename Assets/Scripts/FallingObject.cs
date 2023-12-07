@@ -20,6 +20,7 @@ public class FallingObject : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         scaleChangeAmount = Random.Range(0.3f, 0.6f);
         rb.drag = Random.Range(0.45f, 0.9f);
+        rb.mass = 5f;
     }
     public string getType()
     {
@@ -38,7 +39,7 @@ public class FallingObject : MonoBehaviour
         {
             //prep position to top of screen
             Vector3 newPos = transform.position;
-            newPos.y = Random.Range(8f,16f);
+            newPos.y = 20f;
             newPos.z = Random.Range(-4f, 4f);
             newPos.x = Random.Range(-14f, -6f);
 
@@ -52,7 +53,8 @@ public class FallingObject : MonoBehaviour
             // Set the new scale of the sphere
             transform.localScale = new Vector3(newScaleX, newScaleY, newScaleZ);
             scaleChangeAmount = -scaleChangeAmount;
-            rb.mass = 5f;
+            
+            rb.drag = Random.Range(0.3f, 3.5f);
             //update position to top of screen
             transform.position = newPos;
 
