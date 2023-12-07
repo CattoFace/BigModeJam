@@ -58,6 +58,10 @@ public class LevelManager : MonoBehaviour
         toDest.transform.SetParent(transform);
 
     }
+    public void activateGame(bool state) //state=false is slow mode, state=true is fast mode
+    {
+        //TODO
+    }
     public float submitAnswer(int answer)
     {
         return 0;
