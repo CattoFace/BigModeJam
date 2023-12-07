@@ -102,7 +102,7 @@ public class GameState : MonoBehaviour
     }
 
     public void openMainMenu(){
-        set_lights(false);
+        // set_lights(false); will fix later
         state = State.mainMenu;
         screenText.text = "Main Menu";
         button1.command = Command.startSlow;

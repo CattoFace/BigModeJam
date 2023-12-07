@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class FallingBall : MonoBehaviour
 {
-    public GameObject sphere;
-    public int numSpheres = 10;
     public float minSize = 0.1f;
     public float maxSize = 5f;
     public float scaleChangeAmount;
-    Rigidbody rb;
+    public Rigidbody rb;
     public float maxVelocity = 12f;
     // Start is called before the first frame update
     void Start()

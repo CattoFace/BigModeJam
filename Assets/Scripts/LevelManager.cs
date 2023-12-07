@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        questionPrefabNames = new string[] { "SpheresFallingPrefab","ClothesFallingPrefab","SpheresLeftToRight" };
+        questionPrefabNames = new string[] { "SpheresFallingPrefab","ObjectsFallingPrefab","SpheresLeftToRight" };
         floor = GameObject.Find("stageFloor");
     }
     //update is that function that updates every frame
@@ -55,7 +55,6 @@ public class LevelManager : MonoBehaviour
     public void summonPrefab(State state, float difficulty)
     {
         toDest = Instantiate(currQuestionPrefab, new Vector3(-10f, 0, 0), Quaternion.identity);
-        toDest.transform.SetParent(transform);
 
     }
     public void activateGame(bool state) //state=false is slow mode, state=true is fast mode
