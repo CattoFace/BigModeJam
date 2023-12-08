@@ -953,7 +953,7 @@ GameObject:
   - component: {fileID: 237453480}
   - component: {fileID: 237453479}
   m_Layer: 7
-  m_Name: Ceiling (1)
+  m_Name: stageCeiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3782,6 +3782,7 @@ MonoBehaviour:
   currQuestionPrefab: {fileID: 0}
   fastMode: 0
   questionPrefabNames: []
+  questionPrefabScripts: []
 --- !u!1 &1006252900
 GameObject:
   m_ObjectHideFlags: 0

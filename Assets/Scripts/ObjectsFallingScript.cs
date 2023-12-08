@@ -8,7 +8,7 @@ public class ObjectsFallingScript : MonoBehaviour
     public float minSize = 0.1f;
     public float maxSize = 5f;
     public float scaleChangeAmount;
-    public float  relativeDifficulty;
+    public float relativeDifficulty;
     Rigidbody rb;
     Renderer objectRenderer;
     public float maxVelocity = 18f;
@@ -34,9 +34,13 @@ public class ObjectsFallingScript : MonoBehaviour
     public GameObject washingMachine;
     public Vector3 commonScale;
     public int spawnDifficulty;
-    private string[] answers;
+    public string answer1;
+    public string answer2;
+    public string answer3;
+    public string answer4;
+    public string[] answers;
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,23 +53,19 @@ public class ObjectsFallingScript : MonoBehaviour
                              greenChair, fridge, dresser, toyCar, sofa,
                              grayTable, microwave, brownChair, lamp, plateRack,
                              washingMachine};
-        relativeDifficulty = Random.Range(1.75f,2.9f);
+        relativeDifficulty = Random.Range(1.75f, 2.9f);
         spawnDifficulty = Random.Range(0, 3);
         winObjectIndex = Random.Range(0, 16);
         winObject = Objects[winObjectIndex];
         commonScale = new Vector3(1.3f, 1.3f, 1.3f);
-        if(winObjectIndex == 5 || winObjectIndex == 12) //case chair
-        {
-            if (nameof(winObject) == "greenChair")
-            {
-                answers = new string[] { "Green Chair", "Brown Chair" };
-            }
-            
-        }
-        answers = new string[] {nameof(winObject),nameof(Bed) };
         counter = 0;
         numObjects = 156;
         SpawnObjects();
+        answers = getAnswersForButtons();
+        answer1 = answers[0];
+        answer2 = answers[1];   
+        answer3 = answers[2];
+        answer4 = answers[3];
         Debug.Log("winner: " + winObject.name + " , num objects: " + numObjects +
                 ", difficulty: " + spawnDifficulty);
     }
@@ -148,9 +148,92 @@ public class ObjectsFallingScript : MonoBehaviour
         return;
     }
 
+    int randomMinMaxExcl(int min, int max, int excl1,int excl2,int excl3)
+    {
+        int res;
+        res = Random.Range(min, max);
+        while(res == excl1 || res==excl2 || res == excl3)
+        {
+            res = Random.Range(min, max);
+        }
+        return res;
+    }
+    float randomMinMaxExcl(float min, float max, float excl1, float excl2, float excl3)
+    {
+        float res;
+        res = Random.Range(min, max);
+        while (res == excl1 || res == excl2 || res == excl3)
+        {
+            res = Random.Range(min, max);
+        }
+        return res;
+    }
+
     public string[] getAnswersForButtons()
     {
-        return null;
+        string[] ans;
+        int ans1, ans2, ans3;
+        if (winObjectIndex == 5 || winObjectIndex == 12) //case chair
+        {
+            if (winObject.name == greenChair.name)
+            {
+                ans = new string[] { "Green Chair", "Brown Chair", "Microwave", "coffee Machine" };
+                return ans;
+            }
+            else
+            {
+                ans = new string[] { "Brown Chair", "Green Chair", "Microwave", "coffee Machine" };
+                return ans;
+            }
+
+        }
+        ans1 = randomMinMaxExcl(0, 16, winObjectIndex, 0, 0);
+        ans2 = randomMinMaxExcl(0, 16, winObjectIndex, ans1, 0);
+        ans3 = randomMinMaxExcl(0, 16, winObjectIndex, ans1, ans2);
+        ans = new string[] { getName(winObject), getName(Objects[ans1]), getName(Objects[ans2]), getName(Objects[ans3])};
+        return ans;
+    }
+
+    string getName(GameObject obj)
+    {
+        switch (obj.name)
+        {
+            case "air_hockey_001":
+                return "Air Hockey Table";
+            case "bed_001":
+                return "Bed";
+            case "box_001":
+                return "Box";
+            case "coffee_machine_001":
+                return "Coffee Machine";
+            case "coffee_table_001":
+                return "Brown Table";
+            case "fridge_001":
+                return "Fridge";
+            case "dresser_001":
+                return "Dresser";
+            case "kitchen_chair_001":
+                return "Green Chair";
+            case "lamp_001":
+                return "Lamp";
+            case "lounge_chair_001":
+                return "Brown Chair";
+            case "microwave_oven_001":
+                return "Microwave";
+            case "office_table_001":
+                return "Gray Table";
+            case "sofa_001":
+                return "Sofa";
+            case "toy_001":
+                return "Toy Car";
+            case "training_item_002":
+                return "Plate Rack";
+            case "washing_machine_001":
+                return "Washing Machine";
+            default:
+                return "";
+        }
+        return "";
     }
     // Update is called once per frame
     void Update()

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4346631009680792025}
-  - component: {fileID: 8431779824108687589}
+  - component: {fileID: 2159107330276384706}
   m_Layer: 0
   m_Name: ObjectsFallingPrefab
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8431779824108687589
+--- !u!114 &2159107330276384706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
