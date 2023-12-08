@@ -52,7 +52,7 @@ public class ObjectsFallingScript : MonoBehaviour
         winObject = Objects[winObjectIndex];
         commonScale = new Vector3(1.3f, 1.3f, 1.3f);
         counter = 0;
-        numObjects = 155;
+        numObjects = 151;
         SpawnObjects();
         Debug.Log(winObject.name);
 
@@ -86,7 +86,7 @@ public class ObjectsFallingScript : MonoBehaviour
             switch (j)
             {
                 case 2:
-                    tempObj.transform.localScale *= 1.5f;
+                    tempObj.transform.localScale *= 1.235f;
                     break;
                 case 3:
                     tempObj.transform.localScale *= 1.65f;
@@ -101,13 +101,13 @@ public class ObjectsFallingScript : MonoBehaviour
                     tempObj.transform.localScale *= 1.5f;
                     break;
                 case 12:
-                    tempObj.transform.localScale *= 1.5f;
+                    tempObj.transform.localScale *= 1.2f;
                     break;
                 case 13:
-                    tempObj.transform.localScale *= 3f;
+                    tempObj.transform.localScale *= 2.9f;
                     break;
                 case 14:
-                    tempObj.transform.localScale *= 1.3f;
+                    tempObj.transform.localScale *= 1.2f;
                     break;
                 case 15:
                     tempObj.transform.localScale *= 0.8f;
@@ -121,7 +121,7 @@ public class ObjectsFallingScript : MonoBehaviour
             tempObj.GetComponent<FallingObject>().setType(objType);
             //end of section  
             ++counter;
-            if (counter == 8)
+            if (counter == 7)
             {
                 j++;
                 counter = 0;
