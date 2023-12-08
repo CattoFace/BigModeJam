@@ -23,13 +23,12 @@ public class LevelManager : MonoBehaviour
     private GameObject currQuestionInstance;
     public bool fastMode;
     public string[] questionPrefabNames;
-    public MonoBehaviour[] questionPrefabScripts;
     private GameObject floor;
+    public string[] answers;
 
     void Start()
     {
         questionPrefabNames = new string[] { "SpheresFallingPrefab","ObjectsFallingPrefab","SpheresLeftToRight" };
-        questionPrefabScripts = new MonoBehaviour[] { };
         floor = GameObject.Find("stageFloor");
     }
     //update is that function that updates every frame
@@ -57,13 +56,15 @@ public class LevelManager : MonoBehaviour
     public void summonPrefab(State state, float difficulty)
     {
         currQuestionInstance = Instantiate(currQuestionPrefab, new Vector3(-10f, 0, 0), Quaternion.identity);
-        //updateButtonsText();
+        updateButtonsText();
     }
     public void updateButtonsText()
     {
-        string[] answers = currQuestionInstance.GetComponent<ObjectsFallingScript>().getAnswersForButtons();
-        Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
+        //answers = currQuestionPrefab.getAnswersForButtons() ;
+        //Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
+        return;
     }
+
     public void activateGame(bool state) //state=false is slow mode, state=true is fast mode
     {
         //TODO
