@@ -3722,7 +3722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc1a4111a54e72bc943bfb10723de0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 1
+  sensitivity: 1.5
 --- !u!114 &963194231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3767,16 +3767,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenText: {fileID: 0}
-  button1: {fileID: 0}
-  button2: {fileID: 0}
-  button3: {fileID: 0}
-  button4: {fileID: 0}
-  light1: {fileID: 0}
-  light2: {fileID: 0}
-  light3: {fileID: 0}
-  light4: {fileID: 0}
-  fastPanel: {fileID: 0}
-  slowPanel: {fileID: 0}
+  button1: {fileID: 799958256}
+  button2: {fileID: 1731169593}
+  button3: {fileID: 1755656364}
+  button4: {fileID: 534903493}
+  light1: {fileID: 1363405977}
+  light2: {fileID: 1417072233}
+  light3: {fileID: 114431442}
+  light4: {fileID: 309418228}
+  fastPanel: {fileID: 1128203140}
+  slowPanel: {fileID: 1725658680}
   score: 0
   isAlive: 0
   currQuestionPrefab: {fileID: 0}
