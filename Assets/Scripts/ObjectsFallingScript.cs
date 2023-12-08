@@ -34,10 +34,6 @@ public class ObjectsFallingScript : MonoBehaviour
     public GameObject washingMachine;
     public Vector3 commonScale;
     public int spawnDifficulty;
-    public string answer1;
-    public string answer2;
-    public string answer3;
-    public string answer4;
     public string[] answers;
 
 
@@ -57,15 +53,11 @@ public class ObjectsFallingScript : MonoBehaviour
         spawnDifficulty = Random.Range(0, 3);
         winObjectIndex = Random.Range(0, 16);
         winObject = Objects[winObjectIndex];
+        answers = getAnswersForButtons();
         commonScale = new Vector3(1.3f, 1.3f, 1.3f);
         counter = 0;
         numObjects = 156;
         SpawnObjects();
-        answers = getAnswersForButtons();
-        answer1 = answers[0];
-        answer2 = answers[1];   
-        answer3 = answers[2];
-        answer4 = answers[3];
         Debug.Log("winner: " + winObject.name + " , num objects: " + numObjects +
                 ", difficulty: " + spawnDifficulty);
     }
@@ -187,10 +179,10 @@ public class ObjectsFallingScript : MonoBehaviour
             }
 
         }
-        ans1 = randomMinMaxExcl(0, 16, winObjectIndex, 0, 0);
-        ans2 = randomMinMaxExcl(0, 16, winObjectIndex, ans1, 0);
+        ans1 = randomMinMaxExcl(0, 16, winObjectIndex, -1, -1);
+        ans2 = randomMinMaxExcl(0, 16, winObjectIndex, ans1, -1);
         ans3 = randomMinMaxExcl(0, 16, winObjectIndex, ans1, ans2);
-        ans = new string[] { getName(winObject), getName(Objects[ans1]), getName(Objects[ans2]), getName(Objects[ans3])};
+        ans = new string[] { getName(Objects[winObjectIndex]), getName(Objects[ans1]), getName(Objects[ans2]), getName(Objects[ans3])};
         return ans;
     }
 

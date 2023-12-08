@@ -56,12 +56,13 @@ public class LevelManager : MonoBehaviour
     public void summonPrefab(State state, float difficulty)
     {
         currQuestionInstance = Instantiate(currQuestionPrefab, new Vector3(-10f, 0, 0), Quaternion.identity);
+        Debug.Log(currQuestionInstance.name);
         updateButtonsText();
     }
     public void updateButtonsText()
     {
-        //answers = currQuestionPrefab.getAnswersForButtons() ;
-        //Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
+        answers = currQuestionInstance.GetComponent<ObjectsFallingScript>().getAnswersForButtons();
+        Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
         return;
     }
 
