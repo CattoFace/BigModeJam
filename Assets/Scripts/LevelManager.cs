@@ -60,18 +60,15 @@ public class LevelManager : MonoBehaviour
                 floor.SetActive(true);
                 Destroy(currQuestionInstance);
                 isAlive = false;
-                /*for(int i = 0; i < 4; i++)
-                {
-                    answers[i] = "get necked ";
-                }*/
             }
         }
         if (timer == 5)
         {
             Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
+            updateButtonsText();
             timer++;
         }
-        else if (timer == 460)
+        else if (timer == 660)
         {
             timer = 0;
         }
@@ -86,7 +83,10 @@ public class LevelManager : MonoBehaviour
     }
     public void updateButtonsText()
     {
-        return;
+        button1.textBox.text = answers[0];
+        button2.textBox.text = answers[1];
+        button3.textBox.text = answers[2];
+        button4.textBox.text = answers[3];
     }
     public void setAnswers(string[] ans)
     {
