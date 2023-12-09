@@ -66,11 +66,11 @@ public class LevelManager : MonoBehaviour
         {
             Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
             updateButtonsText();
-            timer++;
+            ++timer;
         }
-        else if (timer == 660)
+        else if (timer == 661)
         {
-            timer = 0;
+            timer = 1;
         }
         else
         {
@@ -91,6 +91,7 @@ public class LevelManager : MonoBehaviour
     public void setAnswers(string[] ans)
     {
         answers = ans;
+   
     }
     public string[] getAnswers()
     {
