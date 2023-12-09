@@ -10,6 +10,7 @@ public class ObjectsFallingScript : MonoBehaviour
     public float scaleChangeAmount;
     public float relativeDifficulty;
     Rigidbody rb;
+    public LevelManager lvlmgr;
     Renderer objectRenderer;
     public float maxVelocity = 18f;
     private GameObject winObject;
@@ -41,6 +42,7 @@ public class ObjectsFallingScript : MonoBehaviour
     void Start()
     {
         activated();
+        answers = new string[4];
     }
 
     public void activated()
@@ -53,11 +55,14 @@ public class ObjectsFallingScript : MonoBehaviour
         spawnDifficulty = Random.Range(0, 3);
         winObjectIndex = Random.Range(0, 16);
         winObject = Objects[winObjectIndex];
-        answers = getAnswersForButtons();
+        lvlmgr = Camera.main.GetComponent<LevelManager>();
         commonScale = new Vector3(1.3f, 1.3f, 1.3f);
         counter = 0;
+        answers=lvlmgr.getAnswers();
+        setAnswersForButtons();
         numObjects = 156;
         SpawnObjects();
+        lvlmgr.setAnswers(answers);
         Debug.Log("winner: " + winObject.name + " , num objects: " + numObjects +
                 ", difficulty: " + spawnDifficulty);
     }
@@ -161,29 +166,16 @@ public class ObjectsFallingScript : MonoBehaviour
         return res;
     }
 
-    public string[] getAnswersForButtons()
-    {
-        string[] ans;
+    public void setAnswersForButtons()
+    { 
         int ans1, ans2, ans3;
-        if (winObjectIndex == 5 || winObjectIndex == 12) //case chair
-        {
-            if (winObject.name == greenChair.name)
-            {
-                ans = new string[] { "Green Chair", "Brown Chair", "Microwave", "coffee Machine" };
-                return ans;
-            }
-            else
-            {
-                ans = new string[] { "Brown Chair", "Green Chair", "Microwave", "coffee Machine" };
-                return ans;
-            }
-
-        }
         ans1 = randomMinMaxExcl(0, 16, winObjectIndex, -1, -1);
         ans2 = randomMinMaxExcl(0, 16, winObjectIndex, ans1, -1);
         ans3 = randomMinMaxExcl(0, 16, winObjectIndex, ans1, ans2);
-        ans = new string[] { getName(Objects[winObjectIndex]), getName(Objects[ans1]), getName(Objects[ans2]), getName(Objects[ans3])};
-        return ans;
+        answers[0] = getName(Objects[winObjectIndex]);
+        answers[1] = getName(Objects[ans1]);
+        answers[2] = getName(Objects[ans2]);
+        answers[3] = getName(Objects[ans3]);
     }
 
     string getName(GameObject obj)
