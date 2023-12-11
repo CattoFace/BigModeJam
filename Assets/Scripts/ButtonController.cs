@@ -34,14 +34,39 @@ public class ButtonController : MonoBehaviour
     public float bodyAppearingDuration = 1;
     public TMP_Text textBox;
     public TMP_Text keyText;
-
+    bool on=true;
     // Start is called before the first frame update
     void Start()
     {
         state = animationState.appearingCase;
         keyText.text = key.ToString();
     }
-
+    public void setStatus(bool toStatus, Command cmd, string str){
+        if(toStatus){
+            turnOn();
+        }else{
+            turnOff();
+        }
+        command = cmd;
+        textBox.text = str;
+    }
+    public void turnOff(bool instant = false){
+        if(on){
+            state = animationState.disappearingBody;
+            on=false;
+        }
+            if(instant){
+            state = animationState.gone;
+            buttonCase.transform.localPosition = Vector3.zero;
+            buttonBody.transform.localPosition = Vector3.zero;
+        }
+    }
+    public void turnOn(){
+        if(!on){
+            state = animationState.appearingCase;
+            on=true;
+        }
+    }
     bool LerpComponent(GameObject target, Vector3 start, Vector3 end, float duration){
         animationTime+=Time.deltaTime;
         float ratio = Mathf.SmoothStep(0,1,animationTime/duration);
@@ -51,10 +76,11 @@ public class ButtonController : MonoBehaviour
 
     // click the button
     public void click(){
-
+        if(on){
             state = animationState.pressingDown;
             gameState.ButtonPressed(command);
             animationTime=0;
+        }         
     }
 
     // Update is called once per frame

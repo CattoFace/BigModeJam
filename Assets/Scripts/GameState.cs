@@ -8,7 +8,8 @@ public enum State{
     mainMenu,
     paused,
     fastMode,
-    slowMode
+    slowMode,
+    instructions
 }
 
 public enum Command{
@@ -21,7 +22,8 @@ public enum Command{
     startFast,
     startSlow,
     instructions,
-    quit
+    quit,
+    none
 }
 
 public class GameState : MonoBehaviour
@@ -40,13 +42,20 @@ public class GameState : MonoBehaviour
     public GameObject fastPanel;
     public GameObject slowPanel;
     public Slider timeLeftSlider;
-    public TMP_Text scoreText;
+    public TMP_Text healthText;
     public TMP_Text timeSurvivedText;
     public float difficulty=0;
     public float difficultyIncreaseRate=1;
-    public float score=0;
-    public float timeAlive=0;
-    void set_lights(bool toSet){
+    float health=0;
+    float timeAlive=0;
+    bool paused = false;
+    string button1BackupText;
+    string button2BackupText;
+    bool button3BackupStatus;
+    bool button4BackupStatus;
+    bool lightsStateBackup;
+    public RectTransform screen;
+    void setLights(bool toSet){
         light1.SetActive(toSet);
         light2.SetActive(toSet);
         light3.SetActive(toSet);
@@ -56,16 +65,24 @@ public class GameState : MonoBehaviour
     public void ButtonPressed(Command command){
         switch(command){
             case Command.answer1:
-                handleAnswer(levelManager.submitAnswer(1));
+                if(!paused){
+                    handleAnswer(levelManager.submitAnswer(1));
+                }
                 break;
             case Command.answer2:
-                handleAnswer(levelManager.submitAnswer(2));
+                if(!paused){
+                    handleAnswer(levelManager.submitAnswer(2));
+                }
                 break;
             case Command.answer3:
-                handleAnswer(levelManager.submitAnswer(3));
+                if(!paused){
+                    handleAnswer(levelManager.submitAnswer(3));
+                }
                 break;
             case Command.answer4:
-                handleAnswer(levelManager.submitAnswer(4));
+                if(!paused){
+                    handleAnswer(levelManager.submitAnswer(4));
+                }
                 break;
             case Command.pause:
                 openPauseMenu();
@@ -93,7 +110,8 @@ public class GameState : MonoBehaviour
                     openMainMenu();
                 }
                 break;
-
+            case Command.none:
+                break;
         }
     }
 
@@ -102,57 +120,94 @@ public class GameState : MonoBehaviour
     }
 
     public void openMainMenu(){
-        // set_lights(false); will fix later
+        screen.sizeDelta = new Vector2(0.32f, 0.188f);
+        setLights(false);
         state = State.mainMenu;
-        screenText.text = "Main Menu";
-        button1.command = Command.startSlow;
-        button1.textBox.text = "Normal Mode";
-        button2.command = Command.startFast;
-        button2.textBox.text = "Survival Mode";
-        button3.command = Command.instructions;
-        button3.textBox.text = "Instructions";
-        button4.command = Command.quit;
-        button4.textBox.text = "Quit";
+        screenText.text = "<Insert Game Name>";
+        button1.setStatus(true, Command.startSlow, "Normal Mode");
+        button2.setStatus(true, Command.startFast, "Survival Mode");
+        button3.setStatus(true, Command.instructions, "Instructions");
+        button4.setStatus(true, Command.quit, "Quit");
         slowPanel.SetActive(false);
         fastPanel.SetActive(false);
     }
 
     void showInstructions(){
-        //TODO
+        screen.sizeDelta = new Vector2(0.32f, 0.3f);
+        state = State.instructions;
+        screenText.text = "<size=40%>In each question you have to select the mode among the items you see.\nIn normal mode, you will be given a set amount of time for each question before the lights go out and you can answer.\nIn Survival Mode, your time will count down and you will be given more when you answer questions correctly.\n\nMode = The most common item";
+        button1.turnOff(true);
+        button2.turnOff(true);
+        button3.turnOff();
+        button4.setStatus(true, Command.quit, "Back");
+
     }
     void startSlowGamemode(){
         state = State.slowMode;
         slowPanel.SetActive(true);
-        score=1;
+        health=3;
         difficulty=0.1f;
-        //TODO
+        //levelManager.startLevel(state, difficulty);
+        button1.setStatus(true, Command.answer1, "ans1");
+        button2.setStatus(true, Command.answer2, "ans2");
+        button3.setStatus(true, Command.answer3, "ans3");
+        button4.turnOff();
+        setLights(true);
     }
     void startFastGamemode(){
         state = State.fastMode;
         fastPanel.SetActive(true);
-        score=1;
+        health=1;
         difficulty=0.1f;
         //TODO
     }
     void resumeGame(){
-        //TODO
+        paused = false;
+        setLights(lightsStateBackup);
+        button1.command = Command.answer1;
+        button1.textBox.text = button1BackupText;
+        button2.command = Command.answer2;
+        button2.textBox.text = button2BackupText;
+        if(button3BackupStatus){
+            button3.turnOn();
+        }
+        if(button4BackupStatus){
+            button3.turnOn();
+        }
     }
     void openPauseMenu(){
-        //TODO
+        paused = true;
+        lightsStateBackup = light1.active;
+        button1BackupText = button1.textBox.text;
+        button2BackupText = button2.textBox.text;
+        button3BackupStatus = button3.command!=Command.none;
+        button4BackupStatus = button4.command!=Command.none;
+        setLights(false);
+        button1.setStatus(true, Command.resume, "Resume");
+        button2.setStatus(true, Command.quit, "Main Menu");
+        button3.turnOff();        
+        button4.turnOff();
     }
     void handleAnswer(float result){
-        score += result;
+        health += result;
         difficulty+=difficultyIncreaseRate;
-        levelManager.summonPrefab(state, difficulty);
+        levelManager.startLevel(state, difficulty);
     }
 
     void Update()
     {
-        if(state==State.fastMode){
+        if(state==State.fastMode && !paused){
             timeAlive+=Time.deltaTime;
             timeSurvivedText.text = timeAlive.ToString("n2")+"s";
-            score-=difficulty*Time.deltaTime;;
-            timeLeftSlider.value = score;
+            health-=difficulty*Time.deltaTime;;
+            timeLeftSlider.value = health;
+        }
+        if(Input.GetKeyDown(KeyCode.Escape) && state!=State.mainMenu && state!=State.instructions){
+            if(paused){
+                resumeGame();
+            }else{
+                openPauseMenu();
+            }
         }
     }
 }

@@ -48,7 +48,7 @@ public class LevelManager : MonoBehaviour
                 if(currQuestionPrefab == null) {
                     Debug.Log("NO");
                 }
-                summonPrefab(State.slowMode, 0);
+                startLevel(State.slowMode, 0);
                 floor.SetActive(false);
                 isAlive = true;
                 Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
@@ -65,7 +65,7 @@ public class LevelManager : MonoBehaviour
         if (timer == 5)
         {
             Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
-            updateButtonsText();
+            // updateButtonsText();
             ++timer;
         }
         else if (timer == 661)
@@ -77,7 +77,7 @@ public class LevelManager : MonoBehaviour
             timer++;
         }
     }
-    public void summonPrefab(State state, float difficulty)
+    public void startLevel(State state, float difficulty)
     {
         currQuestionInstance = Instantiate(currQuestionPrefab, new Vector3(-10f, 0, 0), Quaternion.identity);
     }
