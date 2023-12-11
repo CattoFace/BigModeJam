@@ -44,7 +44,7 @@ public class LevelManager : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Space)) {
             if (!isAlive){
-                currQuestionPrefab = Resources.Load(questionPrefabNames[1]) as GameObject;
+                currQuestionPrefab = Resources.Load(questionPrefabNames[0]) as GameObject;
                 if(currQuestionPrefab == null) {
                     Debug.Log("NO");
                 }
