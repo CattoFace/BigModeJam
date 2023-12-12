@@ -16,6 +16,7 @@ public class SpheresF : MonoBehaviour
     private Color winColor;
     private int winColorIndex;
     private Color[] colors;
+    public LevelManager lvlmgr;
     private int counter;
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,7 @@ public class SpheresF : MonoBehaviour
         colors = new Color[] { Color.red, Color.green, Color.blue, Color.yellow, Color.black, Color.white, Color.cyan, new Color(0.5f, 0f, 0.5f) };
         winColor = colors[winColorIndex];
         Debug.Log(winColorIndex+" , Difficultiy: "+relativeDifficulty);
+        lvlmgr = Camera.main.GetComponent<LevelManager>();
         counter = 0;
         SpawnSpheres();
     }

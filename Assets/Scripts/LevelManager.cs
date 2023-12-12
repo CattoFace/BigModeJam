@@ -55,10 +55,10 @@ public class LevelManager : MonoBehaviour
     }
     public void updateButtonsText()
     {
-        button1.setStatus(answers[0]==null, Command.answer1, answers[0]);
-        button2.setStatus(answers[1]==null, Command.answer2, answers[1]);
-        button3.setStatus(answers[2]==null, Command.answer3, answers[2]);
-        button4.setStatus(answers[3]==null, Command.answer4, answers[3]);
+        button1.setStatus(true, Command.answer1, answers[0]);
+        button2.setStatus(true, Command.answer2, answers[1]);
+        button3.setStatus(true, Command.answer3, answers[2]);
+        button4.setStatus(true, Command.answer4, answers[3]);
     }
     public void setAnswers(string[] ans)
     {
@@ -88,7 +88,7 @@ public class LevelManager : MonoBehaviour
             isAlive = true;
             //TO REMOVE
             Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
-
+            updateButtonsText();
         }
         else
         {
