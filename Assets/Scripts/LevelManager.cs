@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
     public string[] answers;
     public float levelTime;
     public GameState gameState;
-    public bool isAlive=false;
+    private bool isAlive=false;
 
 
     void Start()
@@ -38,38 +38,14 @@ public class LevelManager : MonoBehaviour
     {
         levelTime+=Time.deltaTime;
         if (Input.GetKeyUp(KeyCode.Space)) {
-            if (!isAlive){
-                currQuestionPrefab = Resources.Load(questionPrefabNames[0]) as GameObject;
-                if(currQuestionPrefab == null) {
-                    Debug.Log("NO");
-                }
-                startLevel(State.slowMode, 0);
-                floor.SetActive(false);
-                isAlive = true;
-                Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
-
-            }
-            else
-            {
-                currQuestionPrefab = null;
-                floor.SetActive(true);
-                Destroy(currQuestionInstance);
-                isAlive = false;
-            }
+            summonOrDestroyPrefab(1);
         }
-        if (levelTime == 5)
+        levelTime += Time.deltaTime;
+        if (levelTime == 6f)
         {
             Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
             // updateButtonsText();
-            ++levelTime;
-        }
-        else if (levelTime == 661)
-        {
-            levelTime = 1;
-        }
-        else
-        {
-            levelTime++;
+            levelTime = 0;
         }
     }
     public void startLevel(State state, float difficulty)
@@ -96,6 +72,31 @@ public class LevelManager : MonoBehaviour
     public float submitAnswer(int answer)
     {
         return 0;
+    }
+    public void summonOrDestroyPrefab(int prefabIndex)
+    {
+        if (!isAlive)
+        {
+            currQuestionPrefab = Resources.Load(questionPrefabNames[prefabIndex]) as GameObject;
+            if (currQuestionPrefab == null)
+            {
+                Debug.Log("ERROR, QUITTING");
+                Application.Quit();
+            }
+            startLevel(State.slowMode, 0);
+            floor.SetActive(false);
+            isAlive = true;
+            //TO REMOVE
+            Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
+
+        }
+        else
+        {
+            currQuestionPrefab = null;
+            floor.SetActive(true);
+            Destroy(currQuestionInstance);
+            isAlive = false;
+        }
     }
 }
 
