@@ -24,7 +24,7 @@ public class ObjectsFallingScript : MonoBehaviour
     public GameObject brownTable;
     public GameObject greenChair;
     public GameObject fridge;
-    public GameObject dresser;
+    public GameObject dresser; 
     public GameObject toyCar;
     public GameObject sofa;
     public GameObject grayTable;
@@ -35,14 +35,21 @@ public class ObjectsFallingScript : MonoBehaviour
     public GameObject washingMachine;
     public Vector3 commonScale;
     public int spawnDifficulty;
-    public string[] answers;
+    public string ans1;
+    public string ans2;
+    public string ans3;
+    public string ans4;
+    public bool questionAlive = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        ans1 = "";
+        ans2 = "";
+        ans3 = "";
+        ans4 = "";
         activated();
-        answers = new string[4];
     }
 
     public void activated()
@@ -53,22 +60,22 @@ public class ObjectsFallingScript : MonoBehaviour
                              washingMachine};
         relativeDifficulty = Random.Range(1.75f, 2.9f);
         spawnDifficulty = Random.Range(0, 3);
+        questionAlive = true;
         winObjectIndex = Random.Range(0, 16);
         winObject = Objects[winObjectIndex];
         lvlmgr = Camera.main.GetComponent<LevelManager>();
         commonScale = new Vector3(1.3f, 1.3f, 1.3f);
         counter = 0; 
-        answers=lvlmgr.getAnswers();
-        setAnswersForButtons();
+        setAnswers();
         numObjects = 156;
         SpawnObjects();
-        lvlmgr.setAnswers(answers);
         Debug.Log("winner: " + winObject.name + " , num objects: " + numObjects +
                 ", difficulty: " + spawnDifficulty);
     }
 
     public void SpawnObjects()
     {
+        lvlmgr.setAnswers(ans1, ans2, ans3, ans4);
         GameObject tempObj;
         string objType;
         int j = 0;
@@ -166,16 +173,16 @@ public class ObjectsFallingScript : MonoBehaviour
         return res;
     }
 
-    public void setAnswersForButtons()
+    public void setAnswers()
     { 
-        int ans1, ans2, ans3;
-        ans1 = randomMinMaxExcl(0, 16, winObjectIndex, -1, -1);
-        ans2 = randomMinMaxExcl(0, 16, winObjectIndex, ans1, -1);
-        ans3 = randomMinMaxExcl(0, 16, winObjectIndex, ans1, ans2);
-        answers[0] = getName(Objects[winObjectIndex]);
-        answers[1] = getName(Objects[ans1]);
-        answers[2] = getName(Objects[ans2]);
-        answers[3] = getName(Objects[ans3]);
+        int tempAns1, tempAns2, tempAns3;
+        tempAns1 = randomMinMaxExcl(0, 16, winObjectIndex, -1, -1);
+        tempAns2 = randomMinMaxExcl(0, 16, winObjectIndex, tempAns1, -1);
+        tempAns3 = randomMinMaxExcl(0, 16, winObjectIndex, tempAns1, tempAns2);
+        ans1 = getName(Objects[winObjectIndex]);
+        ans2 = getName(Objects[tempAns1]);
+        ans3 = getName(Objects[tempAns2]);
+        ans4 = getName(Objects[tempAns3]);
     }
 
     string getName(GameObject obj)
@@ -222,6 +229,9 @@ public class ObjectsFallingScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (questionAlive)
+        {
 
-    }
+        }
+     }
 }

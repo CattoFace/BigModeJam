@@ -17,6 +17,10 @@ public class SpheresF : MonoBehaviour
     private int winColorIndex;
     private Color[] colors;
     public LevelManager lvlmgr;
+    public string ans1;
+    public string ans2;
+    public string ans3;
+    public string ans4;
     private int counter;
     // Start is called before the first frame update
     void Start()
@@ -25,11 +29,7 @@ public class SpheresF : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
     public void activateQ()
     {
         //note: when working with integers, Random.Range is (minInclusive,maxExclusive)
@@ -41,11 +41,17 @@ public class SpheresF : MonoBehaviour
         winColor = colors[winColorIndex];
         Debug.Log(winColorIndex+" , Difficultiy: "+relativeDifficulty);
         lvlmgr = Camera.main.GetComponent<LevelManager>();
+        ans1 = "";
+        ans2 = "";
+        ans3 = "";
+        ans4 = "";
+        setAnswers();
         counter = 0;
         SpawnSpheres();
     }
     void SpawnSpheres()
     {
+        lvlmgr.setAnswers(ans1,ans2,ans3,ans4);
         int j = 0;
         for (int i = 0; i < numSpheres; i++)
         {
@@ -76,5 +82,68 @@ public class SpheresF : MonoBehaviour
                 counter = 0;
             }
         }
+    }
+    int randomMinMaxExcl(int min, int max, int excl1, int excl2, int excl3)
+    {
+        int res;
+        res = Random.Range(min, max);
+        while (res == excl1 || res == excl2 || res == excl3)
+        {
+            res = Random.Range(min, max);
+        }
+        return res;
+    }
+    float randomMinMaxExcl(float min, float max, float excl1, float excl2, float excl3)
+    {
+        float res;
+        res = Random.Range(min, max);
+        while (res == excl1 || res == excl2 || res == excl3)
+        {
+            res = Random.Range(min, max);
+        }
+        return res;
+    }
+
+    public void setAnswers()
+    {
+        int tempAns1, tempAns2, tempAns3;
+        tempAns1 = randomMinMaxExcl(0, 8, winColorIndex, -1, -1);
+        tempAns2 = randomMinMaxExcl(0, 8, winColorIndex, tempAns1, -1);
+        tempAns3 = randomMinMaxExcl(0, 8, winColorIndex, tempAns1, tempAns2);
+        ans1 = getName(winColorIndex);
+        ans2 = getName(tempAns1);
+        ans3 = getName(tempAns2);
+        ans4 = getName(tempAns3);
+    }
+
+    public string getName(int colorIndex)
+    {
+        switch (colorIndex)
+        {
+            case 0:
+                return "Red";
+            case 1:
+                return "Green";
+            case 2:
+                return "Blue";
+            case 3:
+                return "Yellow";
+            case 4:
+                return "Black";
+            case 5:
+                return "White";
+            case 6:
+                return "Cyan";
+            case 7:
+                return "Purple";
+            default:
+                break;
+        }
+        return "ERROR";
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

@@ -16,7 +16,10 @@ public class LevelManager : MonoBehaviour
     public bool fastMode;
     public string[] questionPrefabNames;
     private GameObject floor;
-    public string[] answers;
+    public string ans1;
+    public string ans2;
+    public string ans3;
+    public string ans4;
     public float levelTime;
     public GameState gameState;
     private bool isAlive=false;
@@ -26,11 +29,10 @@ public class LevelManager : MonoBehaviour
     {
         questionPrefabNames = new string[] { "SpheresFallingPrefab", "ObjectsFallingPrefab", "SpheresLeftToRight" };
         floor = GameObject.Find("stageFloor");
-        answers = new string[4];
-        for (int i = 0; i < 4; i++)
-        {
-            answers[i] = "";
-        }
+        ans1 = "";
+        ans2 = "";
+        ans3 = "";
+        ans4 = "";
         levelTime = 0;
     }
     //update is that function that updates every frame
@@ -40,11 +42,9 @@ public class LevelManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space)) {
             summonOrDestroyPrefab(1);
         }
-        levelTime += Time.deltaTime;
-        if (levelTime == 6f)
+        if (levelTime == 4)
         {
-            Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
-            // updateButtonsText();
+            Debug.Log(ans1 + " , " + ans2 + " , " + ans3 + " , " + ans4);
             levelTime = 0;
         }
     }
@@ -55,19 +55,18 @@ public class LevelManager : MonoBehaviour
     }
     public void updateButtonsText()
     {
-        button1.setStatus(true, Command.answer1, answers[0]);
-        button2.setStatus(true, Command.answer2, answers[1]);
-        button3.setStatus(true, Command.answer3, answers[2]);
-        button4.setStatus(true, Command.answer4, answers[3]);
+        button1.setStatus(true, Command.answer1, ans1);
+        button2.setStatus(true, Command.answer2, ans2);
+        button3.setStatus(true, Command.answer3, ans3);
+        button4.setStatus(true, Command.answer4, ans4);
     }
-    public void setAnswers(string[] ans)
+    public void setAnswers(string deliveredAnswer1,string deliveredAnswer2, string deliveredAnswer3, string deliveredAnswer4)
     {
-        answers = ans;
+        ans1 = deliveredAnswer1;
+        ans2 = deliveredAnswer2;
+        ans3 = deliveredAnswer3;
+        ans4 = deliveredAnswer4;
    
-    }
-    public string[] getAnswers()
-    {
-        return answers;
     }
     public float submitAnswer(int answer)
     {
@@ -86,9 +85,6 @@ public class LevelManager : MonoBehaviour
             startLevel(State.slowMode, 0);
             floor.SetActive(false);
             isAlive = true;
-            //TO REMOVE
-            Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
-            updateButtonsText();
         }
         else
         {
