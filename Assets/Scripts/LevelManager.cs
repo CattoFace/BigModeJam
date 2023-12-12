@@ -11,21 +11,15 @@ public class LevelManager : MonoBehaviour
     public ButtonController button2;
     public ButtonController button3;
     public ButtonController button4;
-    public GameObject light1;
-    public GameObject light2;
-    public GameObject light3;
-    public GameObject light4;
-    public GameObject fastPanel;
-    public GameObject slowPanel;
-    public int score;
-    public bool isAlive = false;
     public GameObject currQuestionPrefab;
     private GameObject currQuestionInstance;
     public bool fastMode;
     public string[] questionPrefabNames;
     private GameObject floor;
     public string[] answers;
-    public int timer;
+    public float levelTime;
+    public GameState gameState;
+    public bool isAlive=false;
 
 
     void Start()
@@ -37,11 +31,12 @@ public class LevelManager : MonoBehaviour
         {
             answers[i] = "";
         }
-        timer = 0;
+        levelTime = 0;
     }
     //update is that function that updates every frame
     void Update()
     {
+        levelTime+=Time.deltaTime;
         if (Input.GetKeyUp(KeyCode.Space)) {
             if (!isAlive){
                 currQuestionPrefab = Resources.Load(questionPrefabNames[0]) as GameObject;
@@ -62,31 +57,32 @@ public class LevelManager : MonoBehaviour
                 isAlive = false;
             }
         }
-        if (timer == 5)
+        if (levelTime == 5)
         {
             Debug.Log(answers[0] + " , " + answers[1] + " , " + answers[2] + " , " + answers[3]);
             // updateButtonsText();
-            ++timer;
+            ++levelTime;
         }
-        else if (timer == 661)
+        else if (levelTime == 661)
         {
-            timer = 1;
+            levelTime = 1;
         }
         else
         {
-            timer++;
+            levelTime++;
         }
     }
     public void startLevel(State state, float difficulty)
     {
+        levelTime=0;
         currQuestionInstance = Instantiate(currQuestionPrefab, new Vector3(-10f, 0, 0), Quaternion.identity);
     }
     public void updateButtonsText()
     {
-        button1.textBox.text = answers[0];
-        button2.textBox.text = answers[1];
-        button3.textBox.text = answers[2];
-        button4.textBox.text = answers[3];
+        button1.setStatus(answers[0]==null, Command.answer1, answers[0]);
+        button2.setStatus(answers[1]==null, Command.answer2, answers[1]);
+        button3.setStatus(answers[2]==null, Command.answer3, answers[2]);
+        button4.setStatus(answers[3]==null, Command.answer4, answers[3]);
     }
     public void setAnswers(string[] ans)
     {
@@ -96,10 +92,6 @@ public class LevelManager : MonoBehaviour
     public string[] getAnswers()
     {
         return answers;
-    }
-    public void activateGame(bool state) //state=false is slow mode, state=true is fast mode
-    {
-        //TODO
     }
     public float submitAnswer(int answer)
     {

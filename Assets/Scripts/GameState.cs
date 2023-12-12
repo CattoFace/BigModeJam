@@ -9,7 +9,8 @@ public enum State{
     paused,
     fastMode,
     slowMode,
-    instructions
+    instructions,
+    gameOver
 }
 
 public enum Command{
@@ -42,8 +43,10 @@ public class GameState : MonoBehaviour
     public GameObject fastPanel;
     public GameObject slowPanel;
     public Slider timeLeftSlider;
-    public TMP_Text healthText;
+    public Slider livesLeftSlider;
+    public TMP_Text levelText;
     public TMP_Text timeSurvivedText;
+    public int level=0;
     public float difficulty=0;
     public float difficultyIncreaseRate=1;
     float health=0;
@@ -55,7 +58,8 @@ public class GameState : MonoBehaviour
     bool button4BackupStatus;
     bool lightsStateBackup;
     public RectTransform screen;
-    void setLights(bool toSet){
+
+    public void setLights(bool toSet){
         light1.SetActive(toSet);
         light2.SetActive(toSet);
         light3.SetActive(toSet);
@@ -132,6 +136,18 @@ public class GameState : MonoBehaviour
         fastPanel.SetActive(false);
     }
 
+    void showGameOver(bool fast){
+        state = State.gameOver;
+        if(fast){
+            screenText.text = "Game Over!\nYou reached level "+level.ToString();
+        }else{
+            screenText.text = "Game Over!\nYou survived "+timeAlive.ToString("n2")+"s";
+        }
+        button1.setStatus(true, Command.quit, "Main Menu");
+        button2.turnOff();
+        button3.turnOff();
+        button4.turnOff();
+    }
     void showInstructions(){
         screen.sizeDelta = new Vector2(0.32f, 0.3f);
         state = State.instructions;
@@ -145,6 +161,7 @@ public class GameState : MonoBehaviour
     void startSlowGamemode(){
         state = State.slowMode;
         slowPanel.SetActive(true);
+        level=1;
         health=3;
         difficulty=0.1f;
         //levelManager.startLevel(state, difficulty);
@@ -157,6 +174,7 @@ public class GameState : MonoBehaviour
     void startFastGamemode(){
         state = State.fastMode;
         fastPanel.SetActive(true);
+        level=1;
         health=1;
         difficulty=0.1f;
         //TODO
@@ -177,7 +195,7 @@ public class GameState : MonoBehaviour
     }
     void openPauseMenu(){
         paused = true;
-        lightsStateBackup = light1.active;
+        lightsStateBackup = light1.activeSelf;
         button1BackupText = button1.textBox.text;
         button2BackupText = button2.textBox.text;
         button3BackupStatus = button3.command!=Command.none;
@@ -189,7 +207,15 @@ public class GameState : MonoBehaviour
         button4.turnOff();
     }
     void handleAnswer(float result){
+        level+=1;
         health += result;
+        if(state==State.slowMode){
+            levelText.text= level.ToString();
+            livesLeftSlider.value = health;
+            if(health<=0){
+                showGameOver(false);
+            }
+        }
         difficulty+=difficultyIncreaseRate;
         levelManager.startLevel(state, difficulty);
     }
@@ -201,8 +227,11 @@ public class GameState : MonoBehaviour
             timeSurvivedText.text = timeAlive.ToString("n2")+"s";
             health-=difficulty*Time.deltaTime;;
             timeLeftSlider.value = health;
+            if(health<=0){
+                showGameOver(true);
+            }
         }
-        if(Input.GetKeyDown(KeyCode.Escape) && state!=State.mainMenu && state!=State.instructions){
+        if(Input.GetKeyDown(KeyCode.Escape) && state!=State.mainMenu && state!=State.instructions && state!=State.gameOver){
             if(paused){
                 resumeGame();
             }else{

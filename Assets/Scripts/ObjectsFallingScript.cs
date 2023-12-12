@@ -57,7 +57,7 @@ public class ObjectsFallingScript : MonoBehaviour
         winObject = Objects[winObjectIndex];
         lvlmgr = Camera.main.GetComponent<LevelManager>();
         commonScale = new Vector3(1.3f, 1.3f, 1.3f);
-        counter = 0;
+        counter = 0; 
         answers=lvlmgr.getAnswers();
         setAnswersForButtons();
         numObjects = 156;
