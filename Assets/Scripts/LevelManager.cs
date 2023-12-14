@@ -24,7 +24,6 @@ public class LevelManager : MonoBehaviour
     public GameState gameState;
     private bool isAlive=false;
 
-
     void Start()
     {
         questionPrefabNames = new string[] { "SpheresFallingPrefab", "ObjectsFallingPrefab", "SpheresLeftToRight" };
@@ -33,6 +32,7 @@ public class LevelManager : MonoBehaviour
         ans2 = "";
         ans3 = "";
         ans4 = "";
+        isAlive = true;
         levelTime = 0;
     }
     //update is that function that updates every frame
@@ -47,13 +47,12 @@ public class LevelManager : MonoBehaviour
             Debug.Log(ans1 + " , " + ans2 + " , " + ans3 + " , " + ans4);
             levelTime = 0;
         }
-
     }
     public void startLevel(State state, float difficulty)
     {
         levelTime=0;
-        updateButtonsText();
         currQuestionInstance = Instantiate(currQuestionPrefab, new Vector3(-10f, 0, 0), Quaternion.identity);
+        updateButtonsText();
     }
     public void updateButtonsText()
     {
