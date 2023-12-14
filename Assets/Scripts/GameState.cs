@@ -42,6 +42,8 @@ public class GameState : MonoBehaviour
     public Slider livesLeftSlider;
     public TMP_Text levelText;
     public TMP_Text timeSurvivedText;
+    public TMP_Text questionTimeLeftValue;
+    public TMP_Text questionTimeLeftText;
     public int level=0;
     public float difficulty=0;
     public float difficultyIncreaseRate=0;
@@ -53,6 +55,7 @@ public class GameState : MonoBehaviour
     bool button3BackupStatus;
     bool button4BackupStatus;
     bool lightsStateBackup;
+    public float questionTimeLeft;
     public RectTransform screen;
     public GameObject separator;
 
@@ -118,6 +121,8 @@ public class GameState : MonoBehaviour
     }
 
     public void openMainMenu(){
+        paused=false;
+        levelManager.stopLevel();
         screen.sizeDelta = new Vector2(0.32f, 0.188f);
         setLights(false);
         state = State.mainMenu;
@@ -157,11 +162,20 @@ public class GameState : MonoBehaviour
 
     }
     public void setQuestion(string questionText, string ans1, string ans2, string ans3, string ans4){
+        screenText.enabled = state==State.fastMode;
         screenText.text = questionText;
-        button1.setStatus(ans1!=null, Command.answer1, ans1);
-        button2.setStatus(ans2!=null, Command.answer2, ans2);
-        button3.setStatus(ans3!=null, Command.answer3, ans3);
-        button4.setStatus(ans4!=null, Command.answer4, ans4);
+        button1.setStatus(state==State.fastMode && ans1!=null, Command.answer1, ans1);
+        button2.setStatus(state==State.fastMode && ans2!=null, Command.answer2, ans2);
+        button3.setStatus(state==State.fastMode && ans3!=null, Command.answer3, ans3);
+        button4.setStatus(state==State.fastMode && ans4!=null, Command.answer4, ans4);
+    }
+    public void showSlowQuestion(){
+        setLights(false);
+        screenText.enabled = true;
+        button1.turnOn();
+        button2.turnOn();
+        button3.turnOn();
+        button4.turnOn();
     }
     void startSlowGamemode(){
         state = State.slowMode;
@@ -197,7 +211,7 @@ public class GameState : MonoBehaviour
             button3.turnOn();
         }
         if(button4BackupStatus){
-            button3.turnOn();
+            button4.turnOn();
         }
     }
     void openPauseMenu(){
@@ -234,13 +248,19 @@ public class GameState : MonoBehaviour
 
     void Update()
     {
-        if(state==State.fastMode && !paused){
-            timeAlive+=Time.deltaTime;
-            timeSurvivedText.text = timeAlive.ToString("n2")+"s";
-            health-=difficulty*Time.deltaTime;;
-            timeLeftSlider.value = health;
-            if(health<=0){
-                showGameOver(true);
+        if(!paused){
+            if(state==State.fastMode){
+                timeAlive+=Time.deltaTime;
+                timeSurvivedText.text = timeAlive.ToString("n2")+"s";
+                health-=difficulty*Time.deltaTime;;
+                timeLeftSlider.value = health;
+                if(health<=0){
+                    showGameOver(true);
+                }
+            }else if(state==State.slowMode){
+                questionTimeLeftValue.enabled = questionTimeLeft>=0;
+                questionTimeLeftText.enabled = questionTimeLeft>=0;
+                questionTimeLeftValue.text = questionTimeLeft.ToString("n1")+"s";
             }
         }
         if(Input.GetKeyDown(KeyCode.Escape) && state!=State.mainMenu && state!=State.instructions && state!=State.gameOver){

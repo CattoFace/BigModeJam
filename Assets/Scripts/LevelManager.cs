@@ -26,10 +26,11 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        if(levelActive && fastMode){
+        if(levelActive && !fastMode){
             levelTime-=Time.deltaTime;
+            gameState.questionTimeLeft = levelTime;
             if(levelTime<=0){
-                gameState.setLights(false);
+                gameState.showSlowQuestion();
             }
         }
     }

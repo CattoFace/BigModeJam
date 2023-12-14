@@ -17,8 +17,7 @@ public class TemplatePrefabScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lvlmgr = Camera.main.GetComponent<LevelManager>();
-        lvlmgr.setQuestion(questionText,answer1,answer2, answer3, answer4, correctAnswer, correctValue, incorrectValue, time);
+        Camera.main.GetComponent<LevelManager>().setQuestion(questionText,answer1,answer2, answer3, answer4, correctAnswer, correctValue, incorrectValue, time);
     }
 
     // Update is called once per frame
