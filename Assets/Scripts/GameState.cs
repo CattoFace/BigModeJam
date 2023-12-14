@@ -168,7 +168,7 @@ public class GameState : MonoBehaviour
         button1.setStatus(true, Command.answer1, "ans1");
         button2.setStatus(true, Command.answer2, "ans2");
         button3.setStatus(true, Command.answer3, "ans3");
-        button4.turnOff();
+        button4.setStatus(true, Command.answer4, "ans4");
         setLights(true);
     }
     void startFastGamemode(){
@@ -177,6 +177,7 @@ public class GameState : MonoBehaviour
         level=1;
         health=1;
         difficulty=0.1f;
+        setLights(true);
         //TODO
     }
     void resumeGame(){

@@ -42,15 +42,17 @@ public class LevelManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space)) {
             summonOrDestroyPrefab(1);
         }
-        if (levelTime == 4)
+        if (800*Time.deltaTime< levelTime && levelTime < 900*Time.deltaTime)
         {
             Debug.Log(ans1 + " , " + ans2 + " , " + ans3 + " , " + ans4);
             levelTime = 0;
         }
+
     }
     public void startLevel(State state, float difficulty)
     {
         levelTime=0;
+        updateButtonsText();
         currQuestionInstance = Instantiate(currQuestionPrefab, new Vector3(-10f, 0, 0), Quaternion.identity);
     }
     public void updateButtonsText()
@@ -92,6 +94,10 @@ public class LevelManager : MonoBehaviour
             floor.SetActive(true);
             Destroy(currQuestionInstance);
             isAlive = false;
+            ans1 = "";
+            ans2 = "";
+            ans3 = "";
+            ans4 = "";
         }
     }
 }
