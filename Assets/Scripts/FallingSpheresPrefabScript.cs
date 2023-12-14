@@ -51,7 +51,7 @@ public class SpheresF : MonoBehaviour
     }
     void SpawnSpheres()
     {
-        lvlmgr.setAnswers(ans1,ans2,ans3,ans4);
+        // lvlmgr.setAnswers(ans1,ans2,ans3,ans4);
         int j = 0;
         for (int i = 0; i < numSpheres; i++)
         {

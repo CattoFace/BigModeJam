@@ -29,10 +29,6 @@ public enum Command{
 
 public class GameState : MonoBehaviour
 {
-    public GameObject light1;
-    public GameObject light2;
-    public GameObject light3;
-    public GameObject light4;
     public LevelManager levelManager;
     private State state = State.mainMenu;
     public TMP_Text screenText;
@@ -48,7 +44,7 @@ public class GameState : MonoBehaviour
     public TMP_Text timeSurvivedText;
     public int level=0;
     public float difficulty=0;
-    public float difficultyIncreaseRate=1;
+    public float difficultyIncreaseRate=0;
     float health=0;
     float timeAlive=0;
     bool paused = false;
@@ -58,12 +54,10 @@ public class GameState : MonoBehaviour
     bool button4BackupStatus;
     bool lightsStateBackup;
     public RectTransform screen;
+    public GameObject separator;
 
     public void setLights(bool toSet){
-        light1.SetActive(toSet);
-        light2.SetActive(toSet);
-        light3.SetActive(toSet);
-        light4.SetActive(toSet);
+        separator.SetActive(!toSet);
     }
 
     public void ButtonPressed(Command command){
@@ -138,10 +132,14 @@ public class GameState : MonoBehaviour
 
     void showGameOver(bool fast){
         state = State.gameOver;
+        levelManager.stopLevel();
+        setLights(false);
         if(fast){
-            screenText.text = "Game Over!\nYou reached level "+level.ToString();
-        }else{
+            fastPanel.SetActive(false);
             screenText.text = "Game Over!\nYou survived "+timeAlive.ToString("n2")+"s";
+        }else{
+            slowPanel.SetActive(false);
+            screenText.text = "Game Over!\nYou reached level "+level.ToString();
         }
         button1.setStatus(true, Command.quit, "Main Menu");
         button2.turnOff();
@@ -158,18 +156,25 @@ public class GameState : MonoBehaviour
         button4.setStatus(true, Command.quit, "Back");
 
     }
+    public void setQuestion(string questionText, string ans1, string ans2, string ans3, string ans4){
+        screenText.text = questionText;
+        button1.setStatus(ans1!=null, Command.answer1, ans1);
+        button2.setStatus(ans2!=null, Command.answer2, ans2);
+        button3.setStatus(ans3!=null, Command.answer3, ans3);
+        button4.setStatus(ans4!=null, Command.answer4, ans4);
+    }
     void startSlowGamemode(){
         state = State.slowMode;
         slowPanel.SetActive(true);
         level=1;
         health=3;
+        levelText.text= level.ToString();
+        livesLeftSlider.value = health;
         difficulty=0.1f;
-        //levelManager.startLevel(state, difficulty);
-        button1.setStatus(true, Command.answer1, "ans1");
-        button2.setStatus(true, Command.answer2, "ans2");
-        button3.setStatus(true, Command.answer3, "ans3");
-        button4.setStatus(true, Command.answer4, "ans4");
-        setLights(true);
+        difficultyIncreaseRate = 1;
+        levelManager.startLevel(state, difficulty);
+
+
     }
     void startFastGamemode(){
         state = State.fastMode;
@@ -177,8 +182,9 @@ public class GameState : MonoBehaviour
         level=1;
         health=1;
         difficulty=0.1f;
+        difficultyIncreaseRate = 0.01f;
         setLights(true);
-        //TODO
+        levelManager.startLevel(state, difficulty);
     }
     void resumeGame(){
         paused = false;
@@ -196,7 +202,7 @@ public class GameState : MonoBehaviour
     }
     void openPauseMenu(){
         paused = true;
-        lightsStateBackup = light1.activeSelf;
+        lightsStateBackup = separator.activeSelf;
         button1BackupText = button1.textBox.text;
         button2BackupText = button2.textBox.text;
         button3BackupStatus = button3.command!=Command.none;
@@ -211,11 +217,16 @@ public class GameState : MonoBehaviour
         level+=1;
         health += result;
         if(state==State.slowMode){
+            health = Mathf.Min(health,3);
             levelText.text= level.ToString();
             livesLeftSlider.value = health;
             if(health<=0){
+                level-=1; // since we raised it by 1 earlier but lost the game
                 showGameOver(false);
+                return;
             }
+        }else{
+            health = Mathf.Min(health, 1);
         }
         difficulty+=difficultyIncreaseRate;
         levelManager.startLevel(state, difficulty);

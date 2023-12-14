@@ -6,97 +6,70 @@ using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
-    public TMP_Text screenText;
-    public ButtonController button1;
-    public ButtonController button2;
-    public ButtonController button3;
-    public ButtonController button4;
-    public GameObject currQuestionPrefab;
-    private GameObject currQuestionInstance;
-    public bool fastMode;
-    public string[] questionPrefabNames;
-    private GameObject floor;
-    public string ans1;
-    public string ans2;
-    public string ans3;
-    public string ans4;
-    public float levelTime;
+    GameObject currQuestionInstance;
+    bool fastMode;
+    public string[] prefabNames = {};
+    List<GameObject> prefabs = new List<GameObject>();
+    int correctAnswer;
+    float correctValue;
+    float incorrectValue;
+    float levelTime;
+    bool levelActive;
     public GameState gameState;
-    private bool isAlive=false;
-
     void Start()
     {
-        questionPrefabNames = new string[] { "SpheresFallingPrefab", "ObjectsFallingPrefab", "SpheresLeftToRight" };
-        floor = GameObject.Find("stageFloor");
-        ans1 = "";
-        ans2 = "";
-        ans3 = "";
-        ans4 = "";
-        isAlive = true;
-        levelTime = 0;
+        foreach(string prefabName in prefabNames){
+            prefabs.Add(Resources.Load(prefabName) as GameObject);
+        }
+
     }
-    //update is that function that updates every frame
+
     void Update()
     {
-        levelTime+=Time.deltaTime;
-        if (Input.GetKeyUp(KeyCode.Space)) {
-            summonOrDestroyPrefab(1);
-        }
-        if (800*Time.deltaTime< levelTime && levelTime < 900*Time.deltaTime)
-        {
-            Debug.Log(ans1 + " , " + ans2 + " , " + ans3 + " , " + ans4);
-            levelTime = 0;
+        if(levelActive && fastMode){
+            levelTime-=Time.deltaTime;
+            if(levelTime<=0){
+                gameState.setLights(false);
+            }
         }
     }
+
+    private GameObject selectPrefab(){
+        return prefabs[Random.Range(0, prefabs.Count)];
+    }
+
     public void startLevel(State state, float difficulty)
     {
-        levelTime=0;
-        currQuestionInstance = Instantiate(currQuestionPrefab, new Vector3(-10f, 0, 0), Quaternion.identity);
-        updateButtonsText();
+        levelActive = true;
+        if(state==State.fastMode){
+            fastMode=true;
+        }else{
+            fastMode=false;
+        }
+        currQuestionInstance = Instantiate(selectPrefab(), Vector3.zero, Quaternion.identity);
     }
-    public void updateButtonsText()
+    public void setQuestion(string questionText, string ans1,string ans2, string ans3, string ans4, int correct, float cVal, float iVal, float time)
     {
-        button1.setStatus(true, Command.answer1, ans1);
-        button2.setStatus(true, Command.answer2, ans2);
-        button3.setStatus(true, Command.answer3, ans3);
-        button4.setStatus(true, Command.answer4, ans4);
-    }
-    public void setAnswers(string deliveredAnswer1,string deliveredAnswer2, string deliveredAnswer3, string deliveredAnswer4)
-    {
-        ans1 = deliveredAnswer1;
-        ans2 = deliveredAnswer2;
-        ans3 = deliveredAnswer3;
-        ans4 = deliveredAnswer4;
+        correctAnswer = correct;
+        correctValue = cVal;
+        incorrectValue = iVal;
+        levelTime = time;
+        gameState.setQuestion(questionText, ans1,ans2,ans3,ans4);
+        gameState.setLights(true);
    
+    }
+    public void stopLevel(){
+        gameState.setLights(false);
+        Destroy(currQuestionInstance);
+        levelActive = false;
     }
     public float submitAnswer(int answer)
     {
-        return 0;
-    }
-    public void summonOrDestroyPrefab(int prefabIndex)
-    {
-        if (!isAlive)
-        {
-            currQuestionPrefab = Resources.Load(questionPrefabNames[prefabIndex]) as GameObject;
-            if (currQuestionPrefab == null)
-            {
-                Debug.Log("ERROR, QUITTING");
-                Application.Quit();
-            }
-            startLevel(State.slowMode, 0);
-            floor.SetActive(false);
-            isAlive = true;
-        }
-        else
-        {
-            currQuestionPrefab = null;
-            floor.SetActive(true);
-            Destroy(currQuestionInstance);
-            isAlive = false;
-            ans1 = "";
-            ans2 = "";
-            ans3 = "";
-            ans4 = "";
+        stopLevel();
+        if(answer==correctAnswer){
+            return correctValue;
+        }else{
+            return incorrectValue;
         }
     }
 }

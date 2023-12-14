@@ -75,7 +75,7 @@ public class ObjectsFallingScript : MonoBehaviour
 
     public void SpawnObjects()
     {
-        lvlmgr.setAnswers(ans1, ans2, ans3, ans4);
+        // lvlmgr.setAnswers(ans1, ans2, ans3, ans4);
         GameObject tempObj;
         string objType;
         int j = 0;
