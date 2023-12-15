@@ -49,16 +49,18 @@ public class GameState : MonoBehaviour
     public float difficultyIncreaseRate=0;
     float health=0;
     float timeAlive=0;
-    bool paused = false;
+    public bool paused = false;
     string button1BackupText;
     string button2BackupText;
+    bool button1BackupStatus;
+    bool button2BackupStatus;
     bool button3BackupStatus;
     bool button4BackupStatus;
     bool lightsStateBackup;
     public float questionTimeLeft;
     public RectTransform screen;
     public GameObject separator;
-
+    bool blockPause=false;
     public void setLights(bool toSet){
         separator.SetActive(!toSet);
     }
@@ -205,23 +207,44 @@ public class GameState : MonoBehaviour
         paused = false;
         setLights(lightsStateBackup);
         button1.command = Command.answer1;
-        button1.textBox.text = button1BackupText;
         button2.command = Command.answer2;
-        button2.textBox.text = button2BackupText;
+        if(!button1BackupStatus){
+            button1.turnOff();
+        }
+        if(!button2BackupStatus){
+            button2.turnOff();
+        }
         if(button3BackupStatus){
             button3.turnOn();
         }
         if(button4BackupStatus){
             button4.turnOn();
         }
+        blockPause = true;
+        if(button1BackupStatus){
+            lateRestore();
+        }{
+            Invoke("lateRestore", 1);
+        }
+    }
+    //to prevent seeing the answers on game resume
+    void lateRestore(){
+        button1.textBox.text = button1BackupText;
+        button2.textBox.text = button2BackupText;
+        blockPause=false;
     }
     void openPauseMenu(){
+        if(blockPause){
+            return;
+        }
         paused = true;
-        lightsStateBackup = separator.activeSelf;
         button1BackupText = button1.textBox.text;
         button2BackupText = button2.textBox.text;
-        button3BackupStatus = button3.command!=Command.none;
-        button4BackupStatus = button4.command!=Command.none;
+        lightsStateBackup = !separator.activeSelf;
+        button1BackupStatus = button1.on;
+        button2BackupStatus = button2.on;
+        button3BackupStatus = button3.on;
+        button4BackupStatus = button4.on;
         setLights(false);
         button1.setStatus(true, Command.resume, "Resume");
         button2.setStatus(true, Command.quit, "Main Menu");

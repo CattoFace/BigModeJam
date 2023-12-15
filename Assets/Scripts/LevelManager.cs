@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        if(levelActive && !fastMode){
+        if(levelActive && !fastMode && !gameState.paused){
             levelTime-=Time.deltaTime;
             gameState.questionTimeLeft = levelTime;
             if(levelTime<=0){

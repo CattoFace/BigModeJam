@@ -34,7 +34,7 @@ public class ButtonController : MonoBehaviour
     public float bodyAppearingDuration = 1;
     public TMP_Text textBox;
     public TMP_Text keyText;
-    bool on=true;
+    public bool on=true;
     // Start is called before the first frame update
     void Start()
     {
@@ -62,7 +62,7 @@ public class ButtonController : MonoBehaviour
         }
     }
     public void turnOn(){
-        if(!on){
+        if(!on && !textBox.text.Equals("")){
             state = animationState.appearingCase;
             on=true;
         }
