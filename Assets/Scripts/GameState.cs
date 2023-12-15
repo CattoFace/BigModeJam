@@ -229,8 +229,10 @@ public class GameState : MonoBehaviour
     }
     void handleAnswer(float result){
         level+=1;
-        health += result;
         if(state==State.slowMode){
+            if(result<0){
+                health-=1;
+            }
             health = Mathf.Min(health,3);
             levelText.text= level.ToString();
             livesLeftSlider.value = health;
@@ -240,6 +242,7 @@ public class GameState : MonoBehaviour
                 return;
             }
         }else{
+            health += result;
             health = Mathf.Min(health, 1);
         }
         difficulty+=difficultyIncreaseRate;

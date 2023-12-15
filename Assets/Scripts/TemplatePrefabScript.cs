@@ -11,8 +11,8 @@ public class TemplatePrefabScript : MonoBehaviour
     public string answer3="Answer 3";
     public string answer4="Answer 4";
     public int correctAnswer=1;
-    public float correctValue=1;
-    public float incorrectValue=-1;
+    public float correctValue=0.1f;
+    public float incorrectValue=-0.1f;
     public float time = 5;
     // Start is called before the first frame update
     void Start()
