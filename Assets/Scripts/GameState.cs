@@ -117,6 +117,7 @@ public class GameState : MonoBehaviour
     }
 
     void Start(){
+        Cursor.lockState = CursorLockMode.Locked;
         openMainMenu();
     }
 
@@ -126,7 +127,7 @@ public class GameState : MonoBehaviour
         screen.sizeDelta = new Vector2(0.32f, 0.188f);
         setLights(false);
         state = State.mainMenu;
-        screenText.text = "<Insert Game Name>";
+        screenText.text = "Find The Big Mode";
         button1.setStatus(true, Command.startSlow, "Normal Mode");
         button2.setStatus(true, Command.startFast, "Survival Mode");
         button3.setStatus(true, Command.instructions, "Instructions");
@@ -163,11 +164,11 @@ public class GameState : MonoBehaviour
     }
     public void setQuestion(string questionText, string ans1, string ans2, string ans3, string ans4){
         screenText.enabled = state==State.fastMode;
-        screenText.text = questionText;
-        button1.setStatus(state==State.fastMode && ans1!=null, Command.answer1, ans1);
-        button2.setStatus(state==State.fastMode && ans2!=null, Command.answer2, ans2);
-        button3.setStatus(state==State.fastMode && ans3!=null, Command.answer3, ans3);
-        button4.setStatus(state==State.fastMode && ans4!=null, Command.answer4, ans4);
+        screenText.text = "<size=80%>"+questionText;
+        button1.setStatus(state==State.fastMode && !ans1.Equals(""), Command.answer1, ans1);
+        button2.setStatus(state==State.fastMode && !ans2.Equals(""), Command.answer2, ans2);
+        button3.setStatus(state==State.fastMode && !ans3.Equals(""), Command.answer3, ans3);
+        button4.setStatus(state==State.fastMode && !ans4.Equals(""), Command.answer4, ans4);
     }
     public void showSlowQuestion(){
         setLights(false);
@@ -184,8 +185,8 @@ public class GameState : MonoBehaviour
         health=3;
         levelText.text= level.ToString();
         livesLeftSlider.value = health;
-        difficulty=0.1f;
-        difficultyIncreaseRate = 1;
+        difficulty=1;
+        difficultyIncreaseRate = 1.05f;
         levelManager.startLevel(state, difficulty);
 
 
@@ -195,8 +196,8 @@ public class GameState : MonoBehaviour
         fastPanel.SetActive(true);
         level=1;
         health=1;
-        difficulty=0.1f;
-        difficultyIncreaseRate = 0.01f;
+        difficulty=(1.0f/30.0f);
+        difficultyIncreaseRate = 1.05f;
         setLights(true);
         levelManager.startLevel(state, difficulty);
     }
@@ -245,7 +246,7 @@ public class GameState : MonoBehaviour
             health += result;
             health = Mathf.Min(health, 1);
         }
-        difficulty+=difficultyIncreaseRate;
+        difficulty*=difficultyIncreaseRate;
         levelManager.startLevel(state, difficulty);
     }
 

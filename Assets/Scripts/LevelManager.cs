@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour
     float levelTime;
     bool levelActive;
     public GameState gameState;
+    float diff=1;
     void Start()
     {
         foreach(string prefabName in prefabNames){
@@ -41,6 +42,7 @@ public class LevelManager : MonoBehaviour
 
     public void startLevel(State state, float difficulty)
     {
+        diff = difficulty;
         levelActive = true;
         if(state==State.fastMode){
             fastMode=true;
@@ -54,7 +56,7 @@ public class LevelManager : MonoBehaviour
         correctAnswer = correct;
         correctValue = cVal;
         incorrectValue = iVal;
-        levelTime = time;
+        levelTime = time/diff;
         gameState.setQuestion(questionText, ans1,ans2,ans3,ans4);
         gameState.setLights(true);
    
